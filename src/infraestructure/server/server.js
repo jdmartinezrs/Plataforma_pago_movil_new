@@ -1,13 +1,14 @@
 
 import express from 'express';
-import productsRouter from '../../application/routes/productsRouter.js'; 
+import userRouter from '../../application/routes/userRouter.js';
 
 const createServer = () => {
     const app = express();
 
     app.use(express.json());
 
-    app.use('/products', productsRouter); 
+    app.use('/users', userRouter);
+
     
     app.get('/', (req, res) => {
         res.send('Servidor Express funcionando');

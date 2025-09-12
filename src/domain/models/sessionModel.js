@@ -10,8 +10,8 @@
 
 import { DataTypes } from "sequelize";
 import sequelize from '../../infraestructure/database/connectionSQLServer.js';
-import TransactionData from "./transactionDataModel.js"; // ✅ Importar modelo relacionado
-
+import TransactionData from "./transactionDataModel.js"; 
+//import User from "./userModel.js";  
 /**
  * Definición del modelo Session.
  * 
@@ -94,5 +94,9 @@ TransactionData.belongsTo(Session, {
   targetKey: "sesId",    // PK en Session
   as: "session",         // Alias para acceder a la sesión
 });
+
+/*Session.associate = (models) => {
+    Session.belongsTo(models.User, { foreignKey: 'sesCashierId' });
+  };*/
 
 export default Session;

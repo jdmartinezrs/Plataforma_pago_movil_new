@@ -1,52 +1,68 @@
-Name                                                                                                                             Owner                                                                                                                            Type                            Created_datetime
--------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- ------------------------------- -----------------------
-Session                                                                                                                          dbo                                                                                                                              user table                      2023-11-09 17:08:35.257
+import { DataTypes, Model, Optional } from "sequelize";
+//import sequelize from "../../infraestructure/database/connectionSQLServer.js";
 
- 
- 
-Column_name                                                                                                                      Type                                                                                                                             Computed                            Length      Prec  Scale Nullable                            TrimTrailingBlanks                  FixedLenNullInSource                Collation
--------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- ----------------------------------- ----------- ----- ----- ----------------------------------- ----------------------------------- ----------------------------------- --------------------------------------------------------------------------------------------------------------------------------
-sesId                                                                                                                            int                                                                                                                              no                                  4           10    0     no                                  (n/a)                               (n/a)                               NULL
-fisId                                                                                                                            int                                                                                                                              no                                  4           10    0     no                                  (n/a)                               (n/a)                               NULL
-sesCashierName                                                                                                                   varchar                                                                                                                          no                                  50                      yes                                 no                                  yes                                 Modern_Spanish_CI_AS
-sesCashierId                                                                                                                     varchar                                                                                                                          no                                  50                      yes                                 no                                  yes                                 Modern_Spanish_CI_AS
-sesShiftId                                                                                                                       varchar                                                                                                                          no                                  50                      yes                                 no                                  yes                                 Modern_Spanish_CI_AS
-InvoiceFrom                                                                                                                      bigint                                                                                                                           no                                  8           19    0     yes                                 (n/a)                               (n/a)                               NULL
-InvoiceUntil                                                                                                                     bigint                                                                                                                           no                                  8           19    0     yes                                 (n/a)                               (n/a)                               NULL
-DateFrom                                                                                                                         datetime                                                                                                                         no                                  8                       no                                  (n/a)                               (n/a)                               NULL
-DateUntil                                                                                                                        datetime                                                                                                                         no                                  8                       yes                                 (n/a)                               (n/a)                               NULL
-sessName                                                                                                                         bigint                                                                                                                           no                                  8           19    0     no                                  (n/a)                               (n/a)                               NULL
+interface DeviceAttributes {
+  devId: number;
+  devPLid: number;
+  devPath: string;
+  devName?: string;
+  devFiscalName?: string;
+  devEnabled: boolean;
+  devUuid?: string;
+}
 
- 
-Identity                                                                                                                         Seed                                    Increment                               Not For Replication
--------------------------------------------------------------------------------------------------------------------------------- --------------------------------------- --------------------------------------- -------------------
-sesId                                                                                                                            1                                       1                                       0
+// Para creación (devId es autoincremental)
+interface DeviceCreationAttributes extends Optional<DeviceAttributes, "devId"> {}
 
- 
-RowGuidCol
---------------------------------------------------------------------------------------------------------------------------------
-No rowguidcol column defined.
+class Device extends Model<DeviceAttributes, DeviceCreationAttributes>
+  implements DeviceAttributes {
+  public devId!: number;
+  public devPLid!: number;
+  public devPath!: string;
+  public devName?: string;
+  public devFiscalName?: string;
+  public devEnabled!: boolean;
+  public devUuid?: string;
+}
 
- 
-Data_located_on_filegroup
---------------------------------------------------------------------------------------------------------------------------------
-PRIMARY
+Device.init({
+  devId: {
+    type: DataTypes.TINYINT,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
+  devPLid: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  devPath: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
+  devName: {
+    type: DataTypes.STRING(15),
+    allowNull: true,
+  },
+  devFiscalName: {
+    type: DataTypes.STRING(15),
+    allowNull: true,
+  },
+  devEnabled: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
+  devUuid: {
+    type: DataTypes.UUID,
+    allowNull: true,
+  },
+}, {
+  sequelize,
+  modelName: "Device",
+  tableName: "Device",
+  schema: "dbo",
+  timestamps: false,
+});
 
- 
-index_name                                                                                                                       index_description                                                                                                                                                                                                  index_keys
--------------------------------------------------------------------------------------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-PK_Session                                                                                                                       clustered, unique, primary key located on PRIMARY                                                                                                                                                                  sesId
-
- 
-constraint_type                                                                                                                                                                                                                                                  constraint_name                                                                                                                  delete_action update_action status_enabled status_for_replication constraint_keys
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- ------------- ------------- -------------- ---------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-PRIMARY KEY (clustered)                                                                                                                                                                                                                                          PK_Session                                                                                                                       (n/a)         (n/a)         (n/a)          (n/a)                  sesId
-
- 
-Table is referenced by foreign key
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-fdidb.dbo.TransactionData: FK_TransactionData_Session
-
-No hay ninguna vista con la tabla de referencia de enlace de esquema 'Session'.
-
-Hora de finalización: 2025-09-10T17:20:18.7419801-05:0
+export default Device;

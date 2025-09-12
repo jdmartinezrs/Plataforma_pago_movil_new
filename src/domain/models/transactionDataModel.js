@@ -1,224 +1,174 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '../../infraestructure/database/connectionSQLServer.js';
-import Customer from './Customer.js';
-import FiscalConfig from './FiscalConfig.js';
-import Session from './Session.js';
-
 /**
- * Modelo TransactionData
+ * Modelo Sequelize para la tabla 'TransactionData'.
  * 
- * Tabla creada en: 2023-11-02 12:55:16
- * Owner: dbo
- * Ubicación: PRIMARY filegroup
+ * Esta tabla almacena la información de transacciones realizadas, incluyendo referencias
+ * a clientes, sesiones, configuraciones fiscales y otros datos asociados.
  * 
- * Clave primaria:
- *   - traId (int, autoincrement)
- * 
- * Claves foráneas:
- *   - cusId → Customer.cusId
- *   - fisId → FiscalConfig.fisId
- *   - sesId → Session.sesId
- * 
- * Índices:
- *   - PK_TransactionData (clustered, unique, primary key en traId)
+ * Estructura de la tabla en SQL Server:
+ * - traId             (int, PK, Identity, NOT NULL)
+ * - traReferenceId    (varchar(50), NULL)
+ * - traIsDuplicate    (bit, NULL)
+ * - traTimestamp      (datetime, NULL)
+ * - traInvoiceNumber  (varchar(50), NULL)
+ * - cusId             (int, FK a Customer, NULL)
+ * - traNIT            (varchar(20), NULL)
+ * - traFiscalName     (varchar(100), NULL)
+ * - traTelephone      (varchar(30), NULL)
+ * - traAddress        (varchar(200), NULL)
+ * - traOperator       (varchar(200), NULL)
+ * - traNroFactura     (bigint, NULL)
+ * - fisId             (int, FK a FiscalConfig, NULL)
+ * - sesId             (int, FK a Session, NOT NULL)
+ * - traIsTransmited   (bit, NOT NULL, DEFAULT 0)
+ * - traCanceled       (bit, NULL)
+ * - traSaveTime       (datetime, NOT NULL, DEFAULT getdate())
+ * - traCufe           (varchar(200), NULL)
+ * - traAtteDate       (datetime, NULL)
+ * - traExternalPdf    (varchar(400), NULL)
  * 
  * Restricciones:
- *   - DEFAULT traIsTransmited = 0
- *   - DEFAULT traSaveTime = getdate()
- * 
- * Relacionada por FK desde:
- *   - Item, Payment, TransactionCredit, TransactionDataDiscount, TransmitionLog
+ * - PK: traId
+ * - FK: cusId → Customer
+ * - FK: fisId → FiscalConfig
+ * - FK: sesId → Session
  */
-const TransactionData = sequelize.define('TransactionData', {
-  /**
-   * Identificador único de la transacción
-   * PK, autoincremental
-   */
-  traId: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false
-  },
 
-  /**
-   * Identificador de referencia externa
-   * varchar(50), permite nulos
-   */
-  traReferenceId: {
-    type: DataTypes.STRING(50),
-    allowNull: true
-  },
+import { DataTypes } from "sequelize";
+import sequelize from "../../infraestructure/database/connectionSQLServer.js";
+import Customer from "./customerModel.js";
+import FiscalConfig from "./fiscalConfigModel.js";
+import Session from "./sessionModel.js";
+import Item from "./itemModel.js";
+import Payment from "./paymentModel.js";
 
-  /**
-   * Indica si es duplicado
-   * bit → BOOLEAN
-   */
-  traIsDuplicate: {
-    type: DataTypes.BOOLEAN,
-    allowNull: true
-  },
 
-  /**
-   * Marca de tiempo de la transacción
-   */
-  traTimestamp: {
-    type: DataTypes.DATE,
-    allowNull: true
-  },
 
-  /**
-   * Número de factura de la transacción
-   * varchar(50)
-   */
-  traInvoiceNumber: {
-    type: DataTypes.STRING(50),
-    allowNull: true
-  },
 
-  /**
-   * FK hacia Customer (cusId)
-   */
-  cusId: {
-    type: DataTypes.INTEGER,
-    allowNull: true
+const TransactionData = sequelize.define(
+  "TransactionData",
+  {
+    traId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
+    traReferenceId: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+    },
+    traIsDuplicate: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
+    traTimestamp: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    traInvoiceNumber: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+    },
+    cusId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    traNIT: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+    },
+    traFiscalName: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+    },
+    traTelephone: {
+      type: DataTypes.STRING(30),
+      allowNull: true,
+    },
+    traAddress: {
+      type: DataTypes.STRING(200),
+      allowNull: true,
+    },
+    traOperator: {
+      type: DataTypes.STRING(200),
+      allowNull: true,
+    },
+    traNroFactura: {
+      type: DataTypes.BIGINT,
+      allowNull: true,
+    },
+    fisId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    sesId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    traIsTransmited: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    traCanceled: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
+    traSaveTime: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    traCufe: {
+      type: DataTypes.STRING(200),
+      allowNull: true,
+    },
+    traAtteDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    traExternalPdf: {
+      type: DataTypes.STRING(400),
+      allowNull: true,
+    },
   },
-
-  /**
-   * Número de identificación tributaria
-   */
-  traNIT: {
-    type: DataTypes.STRING(20),
-    allowNull: true
-  },
-
-  /**
-   * Razón social
-   */
-  traFiscalName: {
-    type: DataTypes.STRING(100),
-    allowNull: true
-  },
-
-  /**
-   * Teléfono del cliente
-   */
-  traTelephone: {
-    type: DataTypes.STRING(30),
-    allowNull: true
-  },
-
-  /**
-   * Dirección del cliente
-   */
-  traAddress: {
-    type: DataTypes.STRING(200),
-    allowNull: true
-  },
-
-  /**
-   * Nombre del operador
-   */
-  traOperator: {
-    type: DataTypes.STRING(200),
-    allowNull: true
-  },
-
-  /**
-   * Número de factura (bigint en SQL Server)
-   */
-  traNroFactura: {
-    type: DataTypes.BIGINT,
-    allowNull: true
-  },
-
-  /**
-   * FK hacia FiscalConfig (fisId)
-   */
-  fisId: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
-
-  /**
-   * FK hacia Session (sesId)
-   * NOT NULL
-   */
-  sesId: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-
-  /**
-   * Indica si fue transmitido
-   * DEFAULT 0
-   */
-  traIsTransmited: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false
-  },
-
-  /**
-   * Indica si fue cancelado
-   */
-  traCanceled: {
-    type: DataTypes.BOOLEAN,
-    allowNull: true
-  },
-
-  /**
-   * Fecha de guardado en BD
-   * DEFAULT getdate()
-   */
-  traSaveTime: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW
-  },
-
-  /**
-   * Código CUFE
-   */
-  traCufe: {
-    type: DataTypes.STRING(200),
-    allowNull: true
-  },
-
-  /**
-   * Fecha de atención
-   */
-  traAtteDate: {
-    type: DataTypes.DATE,
-    allowNull: true
-  },
-
-  /**
-   * Ruta o referencia del PDF externo
-   */
-  traExternalPdf: {
-    type: DataTypes.STRING(400),
-    allowNull: true
+  {
+    tableName: "TransactionData",
+    schema: "dbo",
+    timestamps: false,
+    indexes: [
+      {
+        name: "PK_TransactionData",
+        unique: true,
+        fields: ["traId"],
+      },
+    ],
   }
-}, {
-  tableName: 'TransactionData',
-  timestamps: false
-});
+);
 
-// Relaciones definidas dentro del mismo modelo
-TransactionData.belongsTo(Customer, { foreignKey: 'cusId' });
-TransactionData.belongsTo(FiscalConfig, { foreignKey: 'fisId' });
-TransactionData.belongsTo(Session, { foreignKey: 'sesId' });
-TransactionData.hasMany(Payment, { foreignKey: 'traId' });//
-TransactionData.hasMany(Item, { foreignKey: 'traId' });
+/**
+ * Relaciones
+ */
 
+// TransactionData → Customer
+TransactionData.belongsTo(Customer, { foreignKey: "cusId", as: "customer" });
+Customer.hasMany(TransactionData, { foreignKey: "cusId", as: "transactions" });
 
-Customer.hasMany(TransactionData, { foreignKey: 'cusId' });
-FiscalConfig.hasMany(TransactionData, { foreignKey: 'fisId' });
-Session.hasMany(TransactionData, { foreignKey: 'sesId' });
+// TransactionData → FiscalConfig
+TransactionData.belongsTo(FiscalConfig, { foreignKey: "fisId", as: "fiscalConfig" });
+FiscalConfig.hasMany(TransactionData, { foreignKey: "fisId", as: "transactions" });
 
+// TransactionData → Session
+TransactionData.belongsTo(Session, { foreignKey: "sesId", as: "session" });
+Session.hasMany(TransactionData, { foreignKey: "sesId", as: "transactions" });
 
+// TransactionData → Item
+TransactionData.hasMany(Item, { foreignKey: "traId", as: "items" });
+Item.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });
 
-Payment.belongsTo(TransactionData, { foreignKey: 'traId' });///
+// TransactionData → Payment
+TransactionData.hasMany(Payment, { foreignKey: "traId", as: "payments" });
+Payment.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });
+
 
 export default TransactionData;
