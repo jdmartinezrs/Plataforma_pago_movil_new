@@ -143,11 +143,11 @@ const Item = sequelize.define(
 //Discount.hasMany(Item, { foreignKey: "disId", as: "items" });
 
 // Item pertenece a una transacción (obligatorio)
-Item.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });
+/*Item.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });
 TransactionData.hasMany(Item, { foreignKey: "traId", as: "items" });
 
 // Item puede tener muchos ParkingItem asociados
 Item.hasMany(ParkingItem, { foreignKey: "iteId", as: "parkingItems" });
-ParkingItem.belongsTo(Item, { foreignKey: "iteId", as: "item" });
+ParkingItem.belongsTo(Item, { foreignKey: "iteId", as: "item" });*/
 
 export default Item;

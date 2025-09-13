@@ -7,7 +7,16 @@ dotenv.config(); // 🔹 fuerza que busque en la raíz
 console.log('DB_HOST:', process.env.DB_HOST);
 
 import createServer from './infraestructure/server/server.js';
-import sequelize from './infraestructure/database/connectionSQLServer.js';
+//import sequelize from './infraestructure/database/connectionSQLServer.js';
+//import { sequelize } from './domain/models/index.js';
+import sequelize from "../src/infraestructure/database/connectionSQLServer.js";
+
+sequelize.sync({ force: false })  // o authenticate(), etc.
+  .then(() => {
+    console.log("DB sincronizada.");
+    // aquí lanzas tu servidor o el resto de la lógica
+  })
+  .catch((err) => console.error("Error al conectar a la DB", err));
 
 const startApp = async () => {
     try {

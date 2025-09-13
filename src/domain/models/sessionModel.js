@@ -11,7 +11,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from '../../infraestructure/database/connectionSQLServer.js';
 import TransactionData from "./transactionDataModel.js"; 
-//import User from "./userModel.js";  
+import User from "./userModel.js";  
 /**
  * Definición del modelo Session.
  * 
@@ -83,7 +83,7 @@ const Session = sequelize.define(
  * - Una Session tiene muchas TransactionData (1:N).
  * - Cada TransactionData pertenece a una Session.
  */
-Session.hasMany(TransactionData, {
+/*Session.hasMany(TransactionData, {
   foreignKey: "sesId",   // FK en TransactionData
   sourceKey: "sesId",    // PK en Session
   as: "transactions",    // Alias para acceder a las transacciones
@@ -93,7 +93,7 @@ TransactionData.belongsTo(Session, {
   foreignKey: "sesId",   // FK en TransactionData
   targetKey: "sesId",    // PK en Session
   as: "session",         // Alias para acceder a la sesión
-});
+});*/
 
 /*Session.associate = (models) => {
     Session.belongsTo(models.User, { foreignKey: 'sesCashierId' });

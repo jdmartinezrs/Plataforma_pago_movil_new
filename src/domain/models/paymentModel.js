@@ -135,9 +135,9 @@ const Payment = sequelize.define(
 );
 
 
-
+/*
 Payment.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });
-TransactionData.hasMany(Payment, { foreignKey: "traId", as: "payments" });
+TransactionData.hasMany(Payment, { foreignKey: "traId", as: "payments" });*/
 //CurrencyAmount.hasMany(Payment, { foreignKey: "currId", as: "payments" });
 //Payment.belongsTo(CurrencyAmount, { foreignKey: "currId", as: "currency" });
 export default Payment;

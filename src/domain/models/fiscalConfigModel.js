@@ -178,11 +178,11 @@ const FiscalConfig = sequelize.define(
 );
 
 
-FiscalConfig.belongsTo(Device, { foreignKey: "devId", as: "device" });
+/*FiscalConfig.belongsTo(Device, { foreignKey: "devId", as: "device" });
 Device.hasMany(FiscalConfig, { foreignKey: "devId", as: "fiscalConfigs" });
 
 FiscalConfig.hasMany(TransactionData, { foreignKey: "fisId", as: "transactions" });
-TransactionData.belongsTo(FiscalConfig, { foreignKey: "fisId", as: "fiscalConfig" });
+TransactionData.belongsTo(FiscalConfig, { foreignKey: "fisId", as: "fiscalConfig" });*/
 
 
 export default FiscalConfig;

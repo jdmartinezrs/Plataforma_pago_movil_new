@@ -104,7 +104,7 @@ const ParkingItem = sequelize.define(
  */
 
 // ParkingItem pertenece a un Item
-ParkingItem.belongsTo(Item, { foreignKey: "iteId", as: "item" });
-Item.hasMany(ParkingItem, { foreignKey: "iteId", as: "parkingItems" });
+/*ParkingItem.belongsTo(Item, { foreignKey: "iteId", as: "item" });
+Item.hasMany(ParkingItem, { foreignKey: "iteId", as: "parkingItems" });*/
 
 export default ParkingItem;

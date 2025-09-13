@@ -141,7 +141,7 @@ const Customer = sequelize.define(
   }
 );
 
-Customer.hasMany(TransactionData, { foreignKey: "cusId", as: "transactions" });
-TransactionData.belongsTo(Customer, { foreignKey: "cusId", as: "customer" });
+//Customer.hasMany(TransactionData, { foreignKey: "cusId", as: "transactions" });
+//TransactionData.belongsTo(Customer, { foreignKey: "cusId", as: "customer" });
 
 export default Customer;

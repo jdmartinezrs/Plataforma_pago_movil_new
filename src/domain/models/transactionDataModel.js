@@ -149,7 +149,7 @@ const TransactionData = sequelize.define(
 /**
  * Relaciones
  */
-
+/*
 // TransactionData → Customer
 TransactionData.belongsTo(Customer, { foreignKey: "cusId", as: "customer" });
 Customer.hasMany(TransactionData, { foreignKey: "cusId", as: "transactions" });
@@ -168,7 +168,7 @@ Item.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });
 
 // TransactionData → Payment
 TransactionData.hasMany(Payment, { foreignKey: "traId", as: "payments" });
-Payment.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });
+Payment.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });*/
 
 
 export default TransactionData;
