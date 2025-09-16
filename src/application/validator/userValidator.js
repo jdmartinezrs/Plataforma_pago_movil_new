@@ -25,13 +25,13 @@ class UserValidator {
         .withMessage('La contraseña debe tener al menos 6 caracteres')
         .notEmpty()
         .withMessage('La contraseña es requerida'),
-      
+      /*
       body('uuid')
         .isUUID()
         .withMessage('El UUID del dispositivo debe tener formato válido')
         .notEmpty()
         .withMessage('El UUID del dispositivo es requerido')
-        
+        */
     ];
   }
     

@@ -13,7 +13,7 @@ class UserController {
     }
   async userLoginController(req, res) {
     try {
-      const { usr_name, usr_passwd, uuid } = req.body;
+      const { usr_name, usr_passwd, uuid} = req.body;
 
       // Validar que se envíe el UUID
       if (!uuid) {
@@ -22,7 +22,7 @@ class UserController {
         });
       }
 
-      const result = await userServices.completeLogin(usr_name, usr_passwd, uuid);
+      const result = await userServices.completeLogin(usr_name, usr_passwd);
 
       if (!result.success) {
         const errorMessages = {
@@ -88,6 +88,7 @@ class UserController {
     }
   }
 }
+
 
 export default new UserController();
 
