@@ -1,3 +1,5 @@
+import { DataTypes } from "sequelize";
+import sequelize from '../../infraestructure/database/connectionSQLServer.js';
 /**
  * Modelo Sequelize para la tabla 'Session'.
  * 
@@ -7,11 +9,6 @@
  * - PK: sesId
  * - FK: Referenciada por TransactionData (FK_TransactionData_Session)
  */
-
-import { DataTypes } from "sequelize";
-import sequelize from '../../infraestructure/database/connectionSQLServer.js';
-import TransactionData from "./transactionDataModel.js"; 
-import User from "./userModel.js";  
 /**
  * Definición del modelo Session.
  * 
@@ -77,26 +74,5 @@ const Session = sequelize.define(
     ],
   }
 );
-
-/**
- * Relaciones con TransactionData:
- * - Una Session tiene muchas TransactionData (1:N).
- * - Cada TransactionData pertenece a una Session.
- */
-/*Session.hasMany(TransactionData, {
-  foreignKey: "sesId",   // FK en TransactionData
-  sourceKey: "sesId",    // PK en Session
-  as: "transactions",    // Alias para acceder a las transacciones
-});
-
-TransactionData.belongsTo(Session, {
-  foreignKey: "sesId",   // FK en TransactionData
-  targetKey: "sesId",    // PK en Session
-  as: "session",         // Alias para acceder a la sesión
-});*/
-
-/*Session.associate = (models) => {
-    Session.belongsTo(models.User, { foreignKey: 'sesCashierId' });
-  };*/
 
 export default Session;

@@ -1,3 +1,6 @@
+import { DataTypes } from "sequelize";
+import sequelize from "../../infraestructure/database/connectionSQLServer.js";
+
 /**
  * Modelo Sequelize para la tabla 'Item'.
  * 
@@ -27,12 +30,6 @@
  * - FK: traId → TransactionData
  * - Referenciada por FK en ParkingItem (iteId)
  */
-
-import { DataTypes } from "sequelize";
-import sequelize from "../../infraestructure/database/connectionSQLServer.js";
-//import Discount from "./discountModel.js";
-import TransactionData from "./transactionDataModel.js";
-import ParkingItem from "./parkingItemModel.js";
 
 const Item = sequelize.define(
   "Item",
@@ -133,21 +130,5 @@ const Item = sequelize.define(
     ],
   }
 );
-
-/**
- * Relaciones del modelo Item
- */
-
-// Item pertenece a un descuento (opcional)
-//Item.belongsTo(Discount, { foreignKey: "disId", as: "discount" });
-//Discount.hasMany(Item, { foreignKey: "disId", as: "items" });
-
-// Item pertenece a una transacción (obligatorio)
-/*Item.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });
-TransactionData.hasMany(Item, { foreignKey: "traId", as: "items" });
-
-// Item puede tener muchos ParkingItem asociados
-Item.hasMany(ParkingItem, { foreignKey: "iteId", as: "parkingItems" });
-ParkingItem.belongsTo(Item, { foreignKey: "iteId", as: "item" });*/
 
 export default Item;

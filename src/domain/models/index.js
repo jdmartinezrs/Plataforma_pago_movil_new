@@ -1,6 +1,4 @@
-// src/models/index.js
 import sequelize from '../../infraestructure/database/connectionSQLServer.js';
-
 import Customer from './customerModel.js';
 import TransactionData from './transactionDataModel.js';
 import Device from './deviceModel.js';

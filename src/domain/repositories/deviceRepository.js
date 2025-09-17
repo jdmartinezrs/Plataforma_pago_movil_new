@@ -1,5 +1,4 @@
-import Device from '../models/deviceModel.js';
-
+import {Device} from '../models/index.js'
 
 class DeviceRepository {
   async findByUuid(devUuid) {

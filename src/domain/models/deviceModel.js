@@ -1,3 +1,6 @@
+import { DataTypes } from "sequelize";
+import sequelize from "../../infraestructure/database/connectionSQLServer.js";
+
 /**
  * Modelo Sequelize para la tabla 'Device'.
  *
@@ -18,11 +21,6 @@
  * - Referenciada por: FiscalConfig (FK_FiscalConfig_Device)
  */
 
-import { DataTypes } from "sequelize";
-import sequelize from "../../infraestructure/database/connectionSQLServer.js";
-import FiscalConfig from "./fiscalConfigModel.js";
-import TransactionData from "./transactionDataModel.js";
-// Model definition
 const Device = sequelize.define(
   "Device",
   {
@@ -102,22 +100,6 @@ const Device = sequelize.define(
   }
 );
 
-/**
- * Relaciones:
- *
- * Un Device puede tener muchas configuraciones fiscales (FiscalConfig)
- * Cada FiscalConfig pertenece a un único Device
- */
-
-/*
-// Relaciones
-Device.hasMany(FiscalConfig, { foreignKey: "devId", as: "fiscalConfigs" });
-FiscalConfig.belongsTo(Device, { foreignKey: "devId", as: "device" });
-
-// Relaciones indirectas: un Device puede acceder a las transacciones
-// a través de FiscalConfig
-FiscalConfig.hasMany(TransactionData, { foreignKey: "fisId", as: "transactions" });
-TransactionData.belongsTo(FiscalConfig, { foreignKey: "fisId", as: "fiscalConfig" });*/
 
 export default Device;
 

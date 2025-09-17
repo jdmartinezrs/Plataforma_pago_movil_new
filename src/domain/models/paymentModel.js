@@ -1,3 +1,5 @@
+import { DataTypes } from "sequelize";
+import sequelize from "../../infraestructure/database/connectionSQLServer.js";
 /**
  * Modelo Sequelize para la tabla 'Payment'.
  *
@@ -20,11 +22,6 @@
  * - FK: currId → CurrencyAmount(currId) (FK_Payment_CurrencyAmount)
  * - FK: traId → TransactionData(traId) (FK_Payment_TransactionData)
  */
-
-import { DataTypes } from "sequelize";
-import sequelize from "../../infraestructure/database/connectionSQLServer.js";
-import TransactionData from "./transactionDataModel.js";
-
 /**
  * Definición del modelo Payment.
  *
@@ -134,10 +131,4 @@ const Payment = sequelize.define(
   }
 );
 
-
-/*
-Payment.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });
-TransactionData.hasMany(Payment, { foreignKey: "traId", as: "payments" });*/
-//CurrencyAmount.hasMany(Payment, { foreignKey: "currId", as: "payments" });
-//Payment.belongsTo(CurrencyAmount, { foreignKey: "currId", as: "currency" });
 export default Payment;

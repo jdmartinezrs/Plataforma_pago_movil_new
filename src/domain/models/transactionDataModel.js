@@ -1,3 +1,6 @@
+
+import { DataTypes } from "sequelize";
+import sequelize from "../../infraestructure/database/connectionSQLServer.js";
 /**
  * Modelo Sequelize para la tabla 'TransactionData'.
  * 
@@ -32,18 +35,6 @@
  * - FK: fisId → FiscalConfig
  * - FK: sesId → Session
  */
-
-import { DataTypes } from "sequelize";
-import sequelize from "../../infraestructure/database/connectionSQLServer.js";
-import Customer from "./customerModel.js";
-import FiscalConfig from "./fiscalConfigModel.js";
-import Session from "./sessionModel.js";
-import Item from "./itemModel.js";
-import Payment from "./paymentModel.js";
-
-
-
-
 const TransactionData = sequelize.define(
   "TransactionData",
   {
@@ -145,30 +136,5 @@ const TransactionData = sequelize.define(
     ],
   }
 );
-
-/**
- * Relaciones
- */
-/*
-// TransactionData → Customer
-TransactionData.belongsTo(Customer, { foreignKey: "cusId", as: "customer" });
-Customer.hasMany(TransactionData, { foreignKey: "cusId", as: "transactions" });
-
-// TransactionData → FiscalConfig
-TransactionData.belongsTo(FiscalConfig, { foreignKey: "fisId", as: "fiscalConfig" });
-FiscalConfig.hasMany(TransactionData, { foreignKey: "fisId", as: "transactions" });
-
-// TransactionData → Session
-TransactionData.belongsTo(Session, { foreignKey: "sesId", as: "session" });
-Session.hasMany(TransactionData, { foreignKey: "sesId", as: "transactions" });
-
-// TransactionData → Item
-TransactionData.hasMany(Item, { foreignKey: "traId", as: "items" });
-Item.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });
-
-// TransactionData → Payment
-TransactionData.hasMany(Payment, { foreignKey: "traId", as: "payments" });
-Payment.belongsTo(TransactionData, { foreignKey: "traId", as: "transaction" });*/
-
 
 export default TransactionData;

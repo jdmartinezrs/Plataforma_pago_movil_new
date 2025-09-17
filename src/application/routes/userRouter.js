@@ -13,15 +13,5 @@ router.post(
   (req, res) => UserController.userLoginController(req, res)
 );
 
-
-router.post('/newUser', 
-    UserValidator.validateUserData(), 
-    (req, res) => UserController.postNewUserController(req, res)
-);
-router.post('/login', 
-    UserValidator.userLogginValidator(), 
-    (req, res) => UserController.userLoginController(req, res)
-);
-
 export default router;
 

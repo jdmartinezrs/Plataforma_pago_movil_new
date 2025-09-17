@@ -1,3 +1,5 @@
+import { DataTypes } from "sequelize";
+import sequelize from '../../infraestructure/database/connectionSQLServer.js';
 /**
  * Modelo Sequelize para la tabla 'Customer'.
  *
@@ -19,11 +21,6 @@
  * - PK: cusId (PRIMARY KEY, clustered, auto-increment)
  * - FK: Referenciada por TransactionData (FK_TransactionData_Customer)
  */
-
-import { DataTypes } from "sequelize";
-import sequelize from '../../infraestructure/database/connectionSQLServer.js';
-import TransactionData from "./transactionDataModel.js";
-
 /**
  * Definición del modelo Customer.
  *
@@ -140,8 +137,5 @@ const Customer = sequelize.define(
     ],
   }
 );
-
-//Customer.hasMany(TransactionData, { foreignKey: "cusId", as: "transactions" });
-//TransactionData.belongsTo(Customer, { foreignKey: "cusId", as: "customer" });
 
 export default Customer;

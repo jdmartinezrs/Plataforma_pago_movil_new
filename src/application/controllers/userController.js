@@ -3,14 +3,6 @@ import userServices from "../services/userServices.js";
 
 class UserController {
 
-    async postNewUserController(req, res) {
-        try {
-            const newUser = await userServices.postNewUserRepository(req.body);
-            res.status(201).json(newUser);
-        } catch (err) {
-            res.status(500).json({ message: 'Error al crear usuario', error: err.message });
-        }
-    }
   async userLoginController(req, res) {
     try {
       const { usr_name, usr_passwd, uuid} = req.body;

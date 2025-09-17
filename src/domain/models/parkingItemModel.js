@@ -1,3 +1,5 @@
+import { DataTypes } from "sequelize";
+import sequelize from "../../infraestructure/database/connectionSQLServer.js";
 /**
  * Modelo Sequelize para la tabla 'ParkingItem'.
  * 
@@ -20,10 +22,6 @@
  * - PK: iteId
  * - FK: iteId → Item
  */
-
-import { DataTypes } from "sequelize";
-import sequelize from "../../infraestructure/database/connectionSQLServer.js";
-import Item from "./itemModel.js";
 
 const ParkingItem = sequelize.define(
   "ParkingItem",
@@ -99,12 +97,5 @@ const ParkingItem = sequelize.define(
   }
 );
 
-/**
- * Relaciones
- */
-
-// ParkingItem pertenece a un Item
-/*ParkingItem.belongsTo(Item, { foreignKey: "iteId", as: "item" });
-Item.hasMany(ParkingItem, { foreignKey: "iteId", as: "parkingItems" });*/
 
 export default ParkingItem;

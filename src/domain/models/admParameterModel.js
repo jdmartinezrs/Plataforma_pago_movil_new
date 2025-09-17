@@ -1,3 +1,7 @@
+
+import { DataTypes } from "sequelize";
+import sequelize from '../../infraestructure/database/connectionSQLServer.js';
+
 /**
  * Modelo Sequelize para la tabla 'admParameter'.
  * 
@@ -9,15 +13,13 @@
  * - parName  (varchar(30), NOT NULL)
  * - parValue (varchar(400), NULL)
  */
-
-import { DataTypes } from "sequelize";
-import sequelize from '../../infraestructure/database/connectionSQLServer.js';
 /**
  * Definición del modelo AdmParameter.
  * 
  * @constant
  * @type {Model}
  */
+
 const AdmParameter = sequelize.define(
   "AdmParameter", // Nombre del modelo en Sequelize
   {

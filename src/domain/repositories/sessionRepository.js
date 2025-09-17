@@ -1,5 +1,4 @@
-import Session from "../models/sessionModel.js";
-
+import {Session}from "../models/index.js"
 class SessionRepository {
   async createSession(sessionData) {
     return await Session.create(sessionData);

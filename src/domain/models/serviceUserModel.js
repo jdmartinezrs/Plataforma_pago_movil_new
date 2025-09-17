@@ -1,3 +1,6 @@
+import { DataTypes } from "sequelize";
+import sequelize from '../../infraestructure/database/connectionSQLServer.js';
+
 /**
  * Modelo Sequelize para la tabla 'service_user'.
  * 
@@ -17,10 +20,6 @@
  * - UNIQUE: (usuTipoDcto, usuNroDcto)
  * - FK: Referenciado por ParkingInput (FK_ParkingInput_service_user)
  */
-
-import { DataTypes } from "sequelize";
-import sequelize from '../../infraestructure/database/connectionSQLServer.js';
-
 /**
  * Definición del modelo ServiceUser.
  * 

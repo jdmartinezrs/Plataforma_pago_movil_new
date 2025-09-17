@@ -1,5 +1,4 @@
-import FiscalConfig from "../models/fiscalConfigModel.js";
-
+import {FiscalConfig} from "../models/index.js";
 class FiscalConfigRepository {
   async getLastByDeviceId(devId) {
     return await FiscalConfig.findOne({

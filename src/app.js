@@ -1,15 +1,10 @@
-import express from 'express';
-
-import path from 'path';
 import dotenv from 'dotenv';
 
 dotenv.config(); // 🔹 fuerza que busque en la raíz
 console.log('DB_HOST:', process.env.DB_HOST);
 
 import createServer from './infraestructure/server/server.js';
-//import sequelize from './infraestructure/database/connectionSQLServer.js';
-//import { sequelize } from './domain/models/index.js';
-import sequelize from "../src/infraestructure/database/connectionSQLServer.js";
+import { sequelize } from './domain/models/index.js';
 
 sequelize.sync({ force: false })  // o authenticate(), etc.
   .then(() => {

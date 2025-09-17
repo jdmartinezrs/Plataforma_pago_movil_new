@@ -3,34 +3,10 @@ import userRepository from "../../domain/repositories/userRepository.js"
 import deviceRepository from '../../domain/repositories/deviceRepository.js';
 import fiscalConfigRepository from '../../domain/repositories/fiscalConfigRepository.js';
 import sessionRepository from '../../domain/repositories/sessionRepository.js';
-//import TransactionData from '../../domain/models/transactionDataModel.js';
+
 
 class UserServices {
 
-       async postNewUserRepository(data) {
-    // 1. Verificar si el usuario ya existe
-    const existingUser = await userRepository.findByUsername(data.usr_name);
-
-    if (existingUser) {
-      throw new Error("El usuario ya existe");
-    }
-
-    // 2. Hashear la contraseña
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(data.usr_passwd, saltRounds);
-
-    // 3. Preparar datos
-    const newUserData = {
-      ...data,
-      usr_passwd: hashedPassword,
-    };
-
-    // 4. Guardar en la base de datos
-    const createdUser = await userRepository.postNewUser(newUserData);
-
-    // 5. Retornar el usuario creado
-    return createdUser;
-  }
   async userLogin(usr_name, usr_passwd) {
     const user = await userRepository.userLogin(usr_name);
     if (!user) return { success: false, error: "USER_NOT_FOUND" };
@@ -133,53 +109,3 @@ export default new UserServices();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-class UserService {
-        async postNewUserRepository(data) {
-        // 1. Verificar si el usuario ya existe (por nombre o correo)
-        const existingUser = await userRepository.findByUsername(data.usr_name, data.email);
-
-        if (existingUser) {
-            throw new Error("El usuario ya existe");
-        }
-
-        // 2. Hashear la contraseña antes de guardarla
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(data.usr_passwd, saltRounds);
-
-        const newUserData = {
-            ...data,
-            usr_passwd: hashedPassword,
-        };
-
-        // 3. Crear usuario en DB
-        return await userRepository.postNewUser(newUserData);
-    }
-
-
-    async userLogin(usr_name, usr_passwd) {
-        const user = await userRepository.userLogin(usr_name);
-        if (!user) return null;
-
-        const isMatch = await bcrypt.compare(usr_passwd, user.usr_passwd);
-        if (!isMatch) return "wrong_password";
-
-        return user;
-    }
-}
-
-export default new UserService();
-*/
